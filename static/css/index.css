@@ -935,3 +935,353 @@ figcaption {
   flex: 1;
   object-fit: contain;
 }
+
+/* ============================================
+   Conference/Journal Badge Styling
+   ============================================ */
+
+.publication-venue {
+  margin: 1.5rem 0;
+  animation: fadeIn 1s ease-out 0.6s both;
+}
+
+.venue-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.venue-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.venue-badge:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: var(--shadow-xl);
+  color: white;
+}
+
+.venue-badge:hover::before {
+  left: 100%;
+}
+
+.venue-badge .icon {
+  font-size: 1.2rem;
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Preprint Badge Variant */
+.venue-badge.preprint {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  cursor: default;
+}
+
+.venue-badge.preprint:hover {
+  transform: none;
+}
+
+.venue-badge.preprint .icon {
+  animation: none;
+}
+
+/* ============================================
+   Institution Logos Styling
+   ============================================ */
+
+.institution-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  animation: fadeIn 1s ease-out 0.8s both;
+}
+
+.logo-container {
+  position: relative;
+  transition: var(--transition-base);
+}
+
+.logo-container a {
+  display: block;
+  padding: 0.5rem;
+  border-radius: 12px;
+  background: var(--bg-white);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-base);
+}
+
+.logo-container a:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(139, 92, 246, 0.05));
+}
+
+.logo-container img {
+  height: 60px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  filter: grayscale(20%);
+  transition: var(--transition-base);
+}
+
+.logo-container a:hover img {
+  filter: grayscale(0%);
+  transform: scale(1.05);
+}
+
+/* Tooltip on hover */
+.logo-container a::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1rem;
+  background: var(--text-dark);
+  color: white;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-base);
+  box-shadow: var(--shadow-md);
+}
+
+.logo-container a:hover::after {
+  opacity: 1;
+  bottom: -40px;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media screen and (max-width: 1024px) {
+  .institution-logos {
+    gap: 2rem;
+  }
+  
+  .logo-container img {
+    height: 50px;
+    max-width: 120px;
+  }
+  
+  .venue-badge {
+    font-size: 1rem;
+    padding: 0.65rem 1.25rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .institution-logos {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .logo-container img {
+    height: 45px;
+    max-width: 100px;
+  }
+  
+  .venue-badge {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+  }
+  
+  .logo-container a::after {
+    display: none; /*  tooltip */
+  }
+}
+
+/* ============================================
+   Additional Badge Variants
+   ============================================ */
+
+/* Journal Badge */
+.venue-badge.journal {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+/* Workshop Badge */
+.venue-badge.workshop {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+/* Under Review Badge */
+.venue-badge.under-review {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* ============================================
+   Ultra Compact Design
+   ============================================ */
+
+.ultra-compact {
+  padding: 1.5rem 1rem !important;
+}
+
+.ultra-compact-title {
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem) !important;
+  margin-bottom: 0.75rem !important;
+  line-height: 1.2 !important;
+  font-weight: 800 !important;
+}
+
+.ultra-compact-authors {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.ultra-compact-authors a {
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.ultra-compact-authors a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.ultra-compact-authors sup {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* Single line meta info */
+.ultra-compact-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 0.75rem 0;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50px;
+  backdrop-filter: blur(5px);
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--text-light);
+}
+
+.meta-item i {
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+.meta-item.venue a {
+  color: var(--primary-color);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.meta-item.venue a:hover {
+  text-decoration: underline;
+}
+
+.meta-item.links {
+  gap: 0.75rem;
+}
+
+.meta-item.links a {
+  color: var(--text-dark);
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.meta-item.links a:hover {
+  color: var(--primary-color);
+  transform: scale(1.2);
+}
+
+/* Minimal logos */
+.ultra-compact-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 0.75rem;
+  opacity: 0.8;
+}
+
+.ultra-compact-logos img {
+  height: 32px;
+  width: auto;
+  max-width: 80px;
+  object-fit: contain;
+  filter: grayscale(30%);
+  transition: all 0.3s ease;
+}
+
+.ultra-compact-logos img:hover {
+  filter: grayscale(0%);
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .ultra-compact {
+    padding: 1rem 0.75rem !important;
+  }
+  
+  .ultra-compact-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 12px;
+    padding: 0.75rem;
+  }
+  
+  .ultra-compact-logos {
+    gap: 1rem;
+  }
+  
+  .ultra-compact-logos img {
+    height: 28px;
+  }
+}
