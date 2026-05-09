@@ -317,7 +317,7 @@
               </span>
 
               <span class="link-block">
-                <a href="https://github.com/zeezou-isee/Mobilekernelbench" target="_blank"
+                <a href="https://github.com/zeezou-isee/Mobilekernelbench_git" target="_blank"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="fab fa-github"></i>
@@ -352,7 +352,7 @@
       <div class="result-group">
         <div class="single-figure">
           <figure class="image">
-            <img src="static/images/teaser.png"
+            <img src="static/images/new_teaser-2.pdf"
                 alt="Overview of MobileKernelBench framework"
                 loading="lazy">
             <figcaption>Overview.</figcaption>
@@ -362,13 +362,17 @@
         <div class="figure-description">
           <p class="subtitle has-text-justified">
             <strong>Overview.</strong>
-            Large language models (LLMs) have recently shown strong potential in generating performance-optimized CUDA kernels for server-grade GPUs. However, their applicability to mobile kernel development remains largely unexplored. Compared with GPU kernels, mobile-side kernel development exhibits several fundamental gaps. First, compatibility priority: mobile frameworks must support a wide spectrum of operators to ensure cross-framework model migration. Second, engineering complexity: the fragmented mobile ecosystem requires developers to target heterogeneous hardware backends and architectures. Third, data scarcity: the lack of high-quality reference implementations in mobile inference frameworks creates a data-poor environment that limits LLM generalization.
+            As illustrated above, mobile kernel generation is not a trivial extension of existing server-side methodologies, but rather a fundamentally distinct proposition. 
+            The inherent gap between server-class and mobile environments manifests primarily across three critical dimensions. 
+            (1) Computation objectives: Server platforms optimize large-scale training and high-throughput computation under abundant resources, whereas mobile devices operate under strict power, memory, and thermal constraints to prioritize lightweight and low-latency inference tummalapalli2026llm,lee2019device. 
+            (2) Execution paradigms: CUDA-centric server frameworks naturally support dynamic execution and direct operator programming, while mobile inference engines depend on static computation graphs that require both intermediate representation transformation and backend-specific kernel implementation for deployment. 
+            (3) Deployment ecosystems: the mobile ecosystem is highly fragmented across inference engines, vendor runtimes, and heterogeneous hardware architectures, making it extremely difficult to establish unified standards for kernel generation, deployment, and evaluation. 
+            Consequently, these profound disparities render the direct migration of existing kernel generation paradigms entirely infeasible. Constructing a unified, systematic pipeline to automatically generate and evaluate kernels for such heterogeneous edge environments constitutes a formidable challenge.
+            </p>
           </p>
-          <p>
-          To study this problem, we introduce MobileKernelBench, a benchmark and automated evaluation pipeline designed for mobile frameworks. The benchmark emphasizes operator diversity, containing 190 tasks across 95 primitive operators, while the pipeline automates the full workflow from registration and cross-compilation to on-device verification.
-          </p>
-          <p>
-          Building on this framework, we propose MoKA (Mobile Kernel Agent), a multi-agent system that performs multi-round planning for compilation, correctness verification, and performance optimization. Experiments on the MNN framework show that MoKA achieves state-of-the-art performance, reaching 93.7% compilation success, strong functional correctness, and 27.4% performance speedups, significantly outperforming existing LLM baselines for mobile kernel generation.
+            While existing studies have shown that LLMs can generate CUDA/Triton kernels, mobile kernel writing remains an underexplored task due to significant hardware and framework disparities. 
+            To bridge this gap, we introduce MobileKernelBench, a novel benchmark and evaluation pipeline for mobile kernels. 
+            Moreover, we propose Mobile Kernel Agent (MoKA), a multi-agent framework that enhances generation abilities and achieves remarkable performance improvement on this new task.
           </p>
         </div>
       </div>
@@ -384,18 +388,16 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          <p>
-            Large language models (LLMs) have demonstrated remarkable capabilities in code generation, 
-            yet their potential for generating kernels specifically for mobile devices remains largely unexplored. 
-            In this work, we extend the scope of automated kernel generation to the mobile domain to investigate the central question: Can LLMs write efficient kernels for mobile devices? 
-            To enable systematic investigation, we introduce MobileKernelBench, a comprehensive evaluation framework comprising a benchmark prioritizing operator diversity and cross-framework interoperability, 
-            coupled with an automated pipeline that bridges the host-device gap for on-device verification. Leveraging this framework, 
-            we conduct extensive evaluation on the CPU backend of Mobile Neural Network (MNN), 
-            revealing that current LLMs struggle with the engineering complexity and data scarcity inherent to mobile frameworks; 
-            standard models and even fine-tuned variants exhibit high compilation failure rates (over 54%) and negligible performance gains due to hallucinations and a lack of domain-specific grounding. 
-            To overcome these limitations, we propose the Mobile Kernel  Agent (MoKA), a multi-agent system equipped with repository-aware reasoning and a plan-and-execute paradigm. 
-            Validated on MobileKernelBench, MoKA achieves state-of-the-art performance, 
-            boosting compilation success to 93.7% and enabling 27.4% of generated kernels to deliver measurable speedups over native libraries.
+          <p>While large language models (LLMs) excel at generating desktop-class GPU kernels, their applicability to mobile devices remains an unexplored frontier. 
+            Due to the gap in computation objectives, execution paradigms, and deployment ecosystems, directly transferring CUDA-centric methods to the mobile domain is not straightforward. 
+            To address this, we present the first systematic investigation into LLM-driven mobile kernel generation. %
+              We introduce MobileKernelBench, a comprehensive benchmark tailored to the hardware characteristics and algorithmic demands of mobile inference frameworks. 
+              Coupled with this benchmark, we propose a standard and automated evaluation pipeline that provides a universal paradigm for operator evaluation. 
+              To address the challenges of end-to-end kernel generation with LLMs, we propose the Mobile Kernel Agent (MoKA), a multi-agent system that decomposes the task and comprehensively improves LLM capability. 
+              Instantiating our pipeline on two mainstream frameworks (MNN and NCNN), baseline evaluations reveal that standard LLMs struggle significantly: 
+              compilation failure rates reach 53.7% on the structurally complex MNN framework, functional correctness peaks at merely 52.0% across both frameworks, and fewer than 12.0% of operators achieve speedups. 
+              MoKA overcomes these bottlenecks, boosting compilation success to 93.7% and delivering measurable latency reductions over native libraries in 46.8% (MNN) and 58.4% (NCNN) of the generated kernels. 
+              Notably, MoKA demonstrates obvious generalization by successfully synthesizing unsupported operators in NCNN framework. Our study suggests that LLMs are capable of mobile kernel generation, and agentic methods can effectively enhance this ability.
           </p>
         </div>
       </div>
@@ -413,7 +415,7 @@
       <div class="result-group">
         <div class="single-figure">
           <figure class="image">
-            <img src="static/images/overview.jpg" alt="System Architecture" loading="lazy"/>
+            <img src="static/images/method.pdf" alt="System Architecture" loading="lazy"/>
             <figcaption>MobileKernelBench and MoKA System Architecture</figcaption>
           </figure>
         </div>
@@ -422,34 +424,29 @@
           <p class="subtitle has-text-justified">
             <strong>System Architecture Overview.</strong>
             The system consists of two core components: 
-            (a) MobileKernelBench, which establishes the evaluation environment by integrating a target-driven data curation process with an automated, 
-            hardware-in-the-loop evaluation pipeline; and (b) MoKA, a multi-role agentic system where Coder, Debugger, 
-            and Accelerator agents collaborate to iteratively generate and refine kernels based on feedback from the benchmark.
+            (a) MobileKernelBench: A bidirectionally validated PyTorch-ONNX benchmark ensuring structural consistency and output equivalence. 
+            (b) Evaluation Pipeline: A rigorous four-stage automated protocol assessing compilation, functional correctness, and on-device latency across different frameworks (e.g., MNN, NCNN). 
+            (c) Mobile Kernel Agent (MoKA): Empowered by specialized framework-aware tools and dual-tier memory, MoKA iteratively routes generated kernels through Repair or Acceleration paths to yield optimized executables.
           </p>
         </div>
       </div>
-      
+<!--       
       <div class="result-group" style="margin-top: 3rem;">
         <div class="single-figure">
           <figure class="image">
-            <img src="static/images/total_result.png" alt="Performance Comparison" loading="lazy"/>
+            <img src="static/images/baseline_result.png" alt="Performance Comparison" loading="lazy"/>
             <figcaption>Performance Evaluation on MobileKernelBench</figcaption>
           </figure>
         </div>
         
         <div class="figure-description">
           <p class="subtitle has-text-justified">
-            <strong>Performance Evaluation Results.</strong>
-            Performance evaluation on MobileKernelBench across three metrics:
-            compilation success rate (CSR), functional correctness rate (FCR), 
-            and performance speedup (fast_p). (a) Baseline LLM performance: 
-            We benchmark prevalent open- and closed-source LLMs, 
-            revealing significant shortcomings in their ability to generate functional and efficient mobile kernels. 
-            (b) Method comparison: We compare our proposed MoKA against common training methods, including LoRA and GRPO. 
-            The red circle (marked at 50%) corresponds to the outer limit of plot (a), highlighting that MoKA achieves substantial improvements, surpassing the performance ceiling of both baseline models and naive fine-tuning approaches.
+            <strong>Baseline performance of SOTA LLMs on MobileKernelBench across MNN and NCNN frameworks.</strong>
+             The best and second-best results are highlighted in bold and underlined, respectively. Some model names are abbreviated for layout purposes
+                The red circle (marked at 50%) corresponds to the outer limit of plot (a), highlighting that MoKA achieves substantial improvements, surpassing the performance ceiling of both baseline models and naive fine-tuning approaches.
         </p>
         </div>
-      </div>
+      </div> -->
       
       <div class="result-group" style="margin-top: 3rem;">
         <div class="single-figure">
@@ -485,14 +482,14 @@
         <div class="dual-figures">
           <div class="figure-column">
             <figure class="image">
-              <img src="static/images/api_results.png" alt="LLM Benchmark Results - Radar Chart" loading="lazy"/>
-              <figcaption>Performance Metrics Comparison</figcaption>
+              <img src="static/images/baseline_result.png" alt="LLM Benchmark Results - Radar Chart" loading="lazy"/>
+              <figcaption>Baseline performance of SOTA LLMs on MobileKernelBench across MNN and NCNN frameworks.</figcaption>
             </figure>
           </div>
           
           <div class="figure-column">
             <figure class="image">
-              <img src="static/images/api_results_table.png" alt="LLM Benchmark Results - Table" loading="lazy"/>
+              <img src="static/images/api_agent_category.pdf" alt="LLM Benchmark Results - Table" loading="lazy"/>
               <figcaption>Detailed Performance Statistics</figcaption>
             </figure>
           </div>
@@ -512,27 +509,6 @@
         </div>
       </div>
       
-      <div class="result-group" style="margin-top: 3rem;">
-        <div class="single-figure">
-          <figure class="image">
-            <img src="static/images/api_category-2.png" alt="Category-wise Performance Analysis" loading="lazy"/>
-            <figcaption>Performance Analysis Across Operator Categories</figcaption>
-          </figure>
-        </div>
-        
-        <div class="figure-description">
-          <p class="subtitle has-text-justified">
-            <strong>Category-wise Performance Analysis.</strong>
-            We further analyze model performance across different operator categories. For computationally lightweight operations such as activation functions, 
-            most models perform relatively well, with Claude-Sonnet-4.5 achieving a functional correctness rate exceeding 70%. 
-            In contrast, more complex operators pose significant challenges. For example, Gemini-2.5-Flash and several leading open-source models fail to generate any functionally correct kernels for convolution tasks. 
-            Interestingly, GPT-5 and DeepSeek-R1-0528 demonstrate comparatively stronger capability on matrix operations, reaching functional correctness rates of 52.6% and 31.6%, respectively. 
-            This suggests that these models may have retained effective algorithmic patterns for general matrix multiplication during pre-training, 
-            even though their overall performance across categories remains limited.
-          </p>
-        </div>
-      </div>
-      
     </div>
   </div>
 </section>
@@ -544,47 +520,40 @@
     <div class="container">
       <h2 class="title is-3 has-text-centered">Experimental Results - MoKA</h2>
       
-      <div class="result-group">
-        <div class="single-figure">
-          <figure class="image">
-            <img src="static/images/MoKA_result.png" alt="MoKA Performance Results" loading="lazy"/>
-            <figcaption>MoKA vs Baseline model & SFT & GRPO </figcaption>
-          </figure>
-        </div>
-        
-        <div class="figure-description">
-          <p class="subtitle has-text-justified">
-            <strong>Performance Evaluation Across Methods.</strong>
-            We compare MoKA with a pass@10 baseline using the same model to control for sampling diversity. Although pass@10 improves over single-query results, the gains remain limited across compilation, correctness, and efficiency metrics.
-            MoKA significantly outperforms both baselines, achieving 75.3% functional correctness and 27.4% success at the fast_1.5 threshold. These results demonstrate that iterative feedback and planning enable the generation of both correct and efficient kernels.  
-          </p>
-          <p class="subtitle has-text-justified">
-            LoRA-based SFT on Qwen3-32B yields only marginal gains, improving compilation and correctness but failing to enhance performance. This highlights that limited training data cannot provide the framework-specific knowledge required for efficient mobile kernel generation.
-          </p>
-          <p class="subtitle has-text-justified">
-            GRPO improves compilation success by enforcing syntactic constraints, but shows minimal gains in correctness or efficiency. This suggests RL alone cannot learn effective hardware-aware strategies for mobile operators.
-          </p>
-        </div>
-      </div>
-      
       <div class="result-group" style="margin-top: 3rem;">
         <div class="single-figure">
           <figure class="image">
-            <img src="static/images/MoKA_category.png" alt="MoKA Category Performance" loading="lazy"/>
-            <figcaption>Fine-grained MoKA Performance Across Operator Categories</figcaption>
+            <img src="static/images/MoKA_result copy.png" alt="Category-wise Performance Analysis" loading="lazy"/>
+            <figcaption>Native Operator Generation.</figcaption>
           </figure>
         </div>
         
         <div class="figure-description">
           <p class="subtitle has-text-justified">
-            <strong>Category-wise MoKA Performance.</strong>
-           Fine-grained performance of LLMs across different operator categories. 
-           We visualize the evaluation metrics for five representative operator types. 
-           The results highlight significant disparities in model capabilities 
-           when handling operators with varying levels of algorithmic complexity.
+            <strong>MoKA performance on MobileKernelBench across MNN and NCNN frameworks.</strong>
+            We evaluate MoKA initialized with Claude-Sonnet-4.5, comparing it against the single-query baseline (Base) and a 10-sample diversity baseline (@10). 
+            Bold values indicate the best performance, 
+            and values in parentheses denote the absolute gains over the pass@10 baselines.
+          </p>
+        </div>
+      </div>
+
+      <div class="result-group" style="margin-top: 3rem;">
+        <div class="single-figure">
+          <figure class="image">
+            <img src="static/images/Unsupported_result.png" alt="MoKA Category Performance" loading="lazy"/>
+            <figcaption>Unsupported Operator Generalization.</figcaption>
+          </figure>
+        </div>
+        
+        <div class="figure-description">
+          <p class="subtitle has-text-justified">
+            <strong>Evaluation on generalization ability.</strong>
+             We evaluate MoKA's ability on the unsupported operators in NCNN framework. 
+             Ten tasks are selected to assess both graph and kernel generation abilities. 
+             We report the first round in which the agent produces a correct implementation in 50 rounds.
         </p>
           <p class="subtitle has-text-justified">
-        The MoKA achieves a 100\% compilation success rate in seven categories and yields substantial correctness gains on complex tasks such as matrix ($>7\times$) and convolution (nearly $2\times$). These results indicate that the Debugger effectively leverages repository context to resolve hallucinations and dependency errors. Moreover, the average speedup of nearly $3\times$ across successful kernels validates the efficacy of the Accelerator in identifying hardware-specific optimizations.
         </p>
         </div>
       </div>
@@ -603,19 +572,16 @@
       <div class="result-group">
         <div class="single-figure">
           <figure class="image">
-            <img src="static/images/case_study.png" alt="Case Study: Optimization Process" loading="lazy"/>
-            <figcaption>Optimization Trajectory and Performance Gains of LayNorm2D Operator</figcaption>
+            <img src="static/images/dual_axis_case_study.pdf" alt="Case Study: Optimization Process" loading="lazy"/>
+            <figcaption>Optimization Trajectory and Performance Gains of LayNorm2D Operator in MNN and Convolution3D in NCNN.</figcaption>
           </figure>
         </div>
         
         <div class="figure-description">
           <p class="subtitle has-text-justified">
-            <strong>Case Study: Iterative Optimization Process.</strong>
-            Starting from a baseline implementation (1.00×), MoKA progressively explores the optimization space and achieves a peak speedup of 6.82× at epoch 8. The agent first improves computational efficiency by introducing SIMD vectorization and FMA instructions to increase instruction throughput. After mitigating compute bottlenecks, it shifts focus to memory latency, applying cache blocking and software prefetching to hide memory access costs. This process demonstrates MoKA's ability to autonomously identify hierarchical bottlenecks and integrate optimization strategies across both instruction-level and memory-level hardware layers.
+            <strong>Case Study.</strong>
+            We present two case studies on Convolution3D and LayerNorm, demonstrating that MoKA possesses strong repair capability and can effectively apply diverse acceleration strategies.
           </p>
-          <p>
-            The optimization trajectory exhibits a non-monotonic “sawtooth” pattern, with temporary performance drops in some iterations. This behavior arises because the agent targets only the most critical bottleneck at each step, which may lead to shifts between compute- and memory-focused strategies. For example, switching from FMA-based optimization to a memory-centric Welford algorithm introduces additional memory overhead, causing short-term regression. These fluctuations provide useful feedback, enabling the agent to refine strategies and ultimately converge to the global optimum.
-            </p>
         </div>
       </div>
       
@@ -636,14 +602,13 @@
         </button>
       </div>
       <pre id="bibtex-code"><code>@misc{zou2026mobilekernelbenchllmswriteefficient,
-        title={MobileKernelBench: Can LLMs Write Efficient Kernels for Mobile Devices?,
+        title={MobileKernelBench: Can LLMs Write Efficient Kernels for Mobile Devices?},
         author={Xingze Zou and Jing Wang and Yuhua Zheng and Xueyi Chen and Haolei Bai and Lingcheng Kong and Syed A. R. Abu-Bakar and Zhaode Wang and Chengfei Lv and Haoji Hu and Huan Wang},
         journal={Conference/Journal Name},
         year={2026},
         eprint={2603.11935},
         archivePrefix={arXiv},
-        url={https://arxiv.org/abs/2603.11935}, 
-      }
+        url={https://arxiv.org/abs/2603.11935},
       }</code></pre>
     </div>
 </section>
